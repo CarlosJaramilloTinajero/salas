@@ -1,51 +1,73 @@
 @extends('vistaBase')
 @section('contenido')
+<style>
+    .carta {
+        height: 130px;
+        width: 260px;
+
+    }
+
+    .card_foot {
+        color: white;
+        text-decoration: none;
+    }
+
+    .card_foot:hover {
+        color: white;
+    }
+</style>
 <center>
-    <div class="contenedor" style="max-width: 90%;">
+    <div class="contenedor">
         <h2 class="titulo">
             Salas agregadas
-
         </h2>
 
-        <hr class="opacity-80" style="color: white;">
-        @if (session('success'))
-        <h6 class="alert alert-success">{{session('success')}}</h6>
-        @endif
-        @error('numeroDeSala')
-        <h6 class="alert alert-danger">{{$message}}</h6>
-        @enderror
+        <hr class="opacity-80" style="color: black;">
+    </div>
+</center>
+<?php $contSalas = 0;
+$contReservas = 0;
+?>
+@foreach ($salas as $sala)
+<?php $contSalas++;
+?>
+@endforeach
 
-        <form action="{{route('salas.store')}}" method="POST">
-            @csrf
-            <div class="row">
-                <div class="col" style="max-width: 180px;"><input class="form-control" type="number" name="numeroDeSala" placeholder="Numero de sala"></div>
-                <div class="col" style="max-width: 170px;"><input class="btn btn-secondary" type="submit" value="Agregar sala"></div>
+@foreach ($reservas as $reserva)
+<?php $contReservas++;
+?>
+@endforeach
+
+<div class="row row-cols-1 row-cols-md-3 g-4" style="margin-left: 4%; max-width: 95%">
+    <div class="col" style="max-width: 270px; margin-left: 10px;">
+        <div class="card zoom carta" style="background-color:  rgba(32, 120, 192 , 0.948);">
+
+            <div class="card-body">
+                <h3 class="card-title letrasCard">{{$contSalas}}</h3>
+                <p class="card-text letrasCard">Total de salas</p>
             </div>
-        </form>
-        <!-- <center> -->
-        <div class="row row-cols-1 row-cols-md-3 g-4" style="margin-top: 30px;">
-            @foreach ($salas as $sala)
-            <div id="" class="col" style="max-width: 250px;">
-                @if ($sala->disposicion == "desocupada")
-
-                <div class="card zoom" style="background-color:  rgba(0, 189, 16, 0.500);">
-                    @else
-                    <div class="card zoom" style="background-color:  rgba(0, 189, 16, 0.582);">
-                        @endif
-                        <div class="card-body">
-                            <a href="{{route('salas.show',['sala' => $sala->id])}}">
-                                <h5 class="card-title letrasCard">Sala #{{$sala->numeroDeSala}}</h5>
-                                <p class="card-text letrasCard">Sala {{$sala->disposicion}}</p>
-                            </a>
-
-                        </div>
-                    </div>
-                </div>
-                @endforeach
+            <div class="" style="background-color: rgb(0, 0, 0, 0.16); height: 30px;">
+                <hr style="margin: 0px;">
+                <center>
+                    <p><a href="{{route('listaSalas')}}" class=" card_foot">Mas informacion -></a></p>
+                </center>
             </div>
         </div>
-        <!-- </center> -->
+    </div>
+    <div class="col" style="max-width: 270px; margin-left: 10px;">
+        <div class="card zoom carta" style="background-color:rgba(11, 156, 23, 0.9);">
 
-</center>
-
+            <div class="card-body">
+                <h3 class="card-title letrasCard">{{$contReservas}}</h3>
+                <p class="card-text letrasCard">Total de reservas</p>
+            </div>
+            <div class="" style="background-color: rgb(0, 0, 0, 0.16); height: 30px;">
+                <hr style="margin: 0px;">
+                <center>
+                    <p><a href="{{route('nuevaReserva')}}" class=" card_foot">Mas informacion -></a></p>
+                </center>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\reserva;
 use App\Models\sala;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,21 @@ class salasController extends Controller
     public function index()
     {
         $salas = sala::all();
-        return view('salas.index', ['salas' => $salas]);
+        $reservas = reserva::all();
+        return view('salas.index', ['salas' => $salas, 'reservas' => $reservas]);
+    }
+
+    public function lista()
+    {
+        $salas = sala::all();
+        return view('salas.listaSalas', ['salas' => $salas]);
+    }
+
+    public function nuevaReserva()
+    {
+        $salas = sala::all();
+        $reservas = reserva::all();
+        return view('salas.reservarSala', ['salas' => $salas, 'reservas' => $reservas]);
     }
 
     /**
@@ -36,16 +51,19 @@ class salasController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'numeroDeSala' => 'required|unique:salas'
+            'nombre' => 'required|min:5',
+            'ubicacion' => 'required|min:5',
+            'descripcion' => 'required|min:5',
+
         ]);
 
         $sala = new sala();
-        $sala->numeroDeSala = $request->numeroDeSala;
-        $sala->disposicion = "desocupada";
-        $sala->horaInicio = 0;
-        $sala->horaFinal = 0;
+        $sala->nombre = $request->nombre;
+        $sala->ubicacion = $request->ubicacion;
+        $sala->descripcion = $request->descripcion;
+        $sala->estado = $request->estado;
         $sala->save();
-        return redirect()->back()->with('success', 'Sala #' . $request->numeroDeSala . ' agregada correctamente');
+        return redirect()->back()->with('success', 'Sala "' . $request->nombre . '" agregada correctamente');
     }
 
     /**
@@ -81,14 +99,20 @@ class salasController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'numeroDeSala' => 'required|unique:salas'
+            'nombre' => 'required|min:5',
+            'ubicacion' => 'required|min:5',
+            'descripcion' => 'required|min:5',
         ]);
 
         $sala = sala::find($id);
-        $sala->numeroDeSala = $request->numeroDeSala;
+        $sala->nombre = $request->nombre;
+        $sala->ubicacion = $request->ubicacion;
+        $sala->descripcion = $request->descripcion;
+        $sala->estado = $request->estado;
+
         $sala->save();
 
-        return redirect()->back()->with('success', 'Sala modificada correctamente');
+        return redirect()->back()->with('success', 'Sala "' . $sala->nombre . '" modificada correctamente');
     }
 
     /**
@@ -99,6 +123,11 @@ class salasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $sala = sala::find($id);
+        $sala->reservas()->each(function ($reserva) {
+            $reserva->delete();
+        });
+        $sala->delete();
+        return redirect()->back()->with('success', 'Sala "' . $sala->nombre . '" eliminada correctamente');
     }
 }

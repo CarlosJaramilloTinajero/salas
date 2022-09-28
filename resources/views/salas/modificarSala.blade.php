@@ -35,7 +35,7 @@
         <form action="{{route('inicio')}}" style="max-width: 300px;" method="POST" onsubmit="javascript: return ocupar(document.getElementById('dia').value, document.getElementById('inicio').value, document.getElementById('final').value);">
             @csrf
             @method('UPDATE')
-            <label for="" class="form-label">dia de inicio</label>
+            <label for="" class="form-label">Dia de la reserva</label>
             <input type="date" name="dia" id="dia" class="form-control"><br>
 
             <label for="" class="form-label">Hora de inicio</label>
