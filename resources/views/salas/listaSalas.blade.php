@@ -2,7 +2,7 @@
 @section('contenido')
 <center>
     <!-- style="border: rgb(0, 0, 0, 0.1) 2px solid;" -->
-    <div class="contenedor rounded">
+    <div class="contenedor" style="margin-bottom: 100px;">
         <div class="row">
             <div class="col">
                 <legend class="titulo">Lista de salas</legend>

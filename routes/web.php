@@ -15,12 +15,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/reservas', [reservaController::class, 'index'])->name('reservas');
+
 Route::get('/', [salasController::class, 'index'])->name('inicio');
 
 Route::get('/lista_Salas', [salasController::class, 'lista'])->name('listaSalas');
 
 Route::get('/nueva_Reserva', [salasController::class, 'nuevaReserva'])->name('nuevaReserva');
 
-Route::post('/reserva',[reservaController::class,'store'])->name('agregarReserva');
+Route::patch('/reserva/{reserva}', [reservaController::class, 'update'])->name('modificarReserva');
+
+Route::delete('/reserva/destroy/{reserva}', [reservaController::class, 'destroy'])->name('eliminarRerserva');
+
+Route::post('/reserva', [reservaController::class, 'store'])->name('agregarReserva');
 
 Route::resource('salas', salasController::class);

@@ -7,17 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="/icono/iconoS.png">
+    <meta name="google" value="notranslate">
     <title>Salas</title>
     <style>
-        /* .estadoTabla{
-
-        } */
-        /* th{
-            padding: 100px;
-        }
-        td{
-            padding: 10px;
-        } */
         a {
             text-decoration: none;
         }
@@ -65,7 +58,7 @@
             /* border-bottom: white 2px solid; */
         }
 
-        .menuL{
+        .menuL {
             margin-left: 18px;
         }
     </style>
@@ -94,17 +87,15 @@
                                 </svg> Lista de salas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menuL" href="{{route('nuevaReserva')}}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-fill" viewBox="0 0 16 16">
-                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V5h16V4H0V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5z" />
+                            <a class="nav-link menuL" href="{{route('nuevaReserva')}}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-plus-fill" viewBox="0 0 16 16">
+                                    <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zM8.5 8.5V10H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V11H6a.5.5 0 0 1 0-1h1.5V8.5a.5.5 0 0 1 1 0z" />
                                 </svg> Reservar sala</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menuL" href="#">En uso</a>
+                            <a class="nav-link menuL" href="{{route('reservas')}}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-fill" viewBox="0 0 16 16">
+                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V5h16V4H0V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5z" />
+                                </svg> Reservas</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link menuL" href="#">Desocupadas</a>
-                        </li>
-
                     </ul>
                 </div>
             </div>
@@ -115,5 +106,36 @@
     @yield('contenido')
 
 </body>
+
+
+<footer style="background-color: rgba(7, 39, 65, 0.8); padding-top: 80px; padding-bottom: 10px; margin-top: 40px;">
+    <center>
+        <div>
+            <p style="color: white; font-size: 12px;">
+                Sitio web Desarrollado por Carlos Daniel Jaramillo Tinajero
+            </p>
+            <div class="d-flex justify-content-center mb-2">
+                <div class="p-2">
+                    <p class="col" style="max-width: 150px; color: white; font-size: 11px; text-align: center;">
+                        FrameWorks utilizados <br>
+                        Laravel <br>
+                        BootStrap <br>
+                    </p>
+                </div>
+                <div class="p-2">
+                    <p class="col" style="max-width: 150px; color: white; font-size: 11px; text-align: center;">
+                        Lenguajes utilizados <br>
+                        PHP <br>
+                        HTML <br>
+                        JavaScript <br>
+                        MySql <br>
+                        CSS
+                    </p>
+                </div>
+            </div>
+            <p style="color: white; font-size: 12px;">https://github.com/CarlosJaramilloTinajero/salas</p>
+        </div>
+    </center>
+</footer>
 
 </html>

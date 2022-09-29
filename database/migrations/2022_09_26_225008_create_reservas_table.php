@@ -13,6 +13,7 @@ class CreateReservasTable extends Migration
      */
     public function up()
     {
+        //Creacion de tabla reservas
         Schema::create('reservas', function (Blueprint $table) {
             $table->id();
             $table->string('a_nombre_de');

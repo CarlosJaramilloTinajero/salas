@@ -14,6 +14,7 @@ class AddSalaIdToReserva extends Migration
     public function up()
     {
         Schema::table('reservas', function (Blueprint $table) {
+            //Creacion de llave foranea sala_id en la tabla reservas
             $table->bigInteger('sala_id')->unsigned();
             $table
                 ->foreign('sala_id')

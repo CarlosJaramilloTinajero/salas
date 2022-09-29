@@ -1,12 +1,12 @@
 @extends('vistaBase')
 @section('contenido')
 <style>
-    .tablaE{
+    .tablaE {
         padding: 10px;
     }
 </style>
 <center>
-    <div class="contenedor">
+    <div class="contenedor" style="margin-bottom: 100px;">
         <legend>Reservar sala</legend>
         <hr class="opacity-80" style="color: black;">
         <div class="row ">
@@ -28,7 +28,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $i = 0; ?>
+                        <?php
+
+                        $i = 0; ?>
                         @foreach ($reservas as $reserva)
                         <?php $salaF = null; ?>
                         @foreach ($salas as $sala)
@@ -39,7 +41,7 @@
 
                         <?php $i++; ?>
                         <tr>
-                            <th scope="row " class="tablaE">{{$i}} </th>
+                            <th scope="row">{{$i}} </th>
                             <td>{{$salaF->nombre}}</td>
                             <td>{{$reserva->a_nombre_de}}</td>
                             <td>{{$reserva->dia}}</td>
@@ -59,7 +61,7 @@
                                         </li>
                                         <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-sala-eliminar-{{$reserva->id}}" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
                                                     <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
-                                                </svg> Eliminar</a></li>
+                                                </svg> Cancelar</a></li>
                                     </ul>
                                 </div>
                             </td>
@@ -78,8 +80,9 @@
                                         <h6 class="alert alert-success">{{session('success')}}</h6>
                                         @endif
                                         <div id="modal"></div>
-                                        <form action="{{route('agregarReserva')}}" method="POST" onsubmit="javascript: return validar(document.getElementById('dia').value, document.getElementById('inicio').value, document.getElementById('final').value);">
+                                        <form action="{{route('modificarReserva',['reserva' => $reserva->id])}}" method="POST" onsubmit="javascript: return validar(document.getElementById('diaM{{$i}}').value, document.getElementById('inicioM{{$i}}').value, document.getElementById('finalM{{$i}}').value, 'alertaM{{$i}}');">
                                             @csrf
+                                            @method('PATCH')
                                             <label for="" class="form-label" style="color: black;"><strong>Seleccionar sala</strong></label>
                                             <select class="form-select" name="sala">
                                                 @foreach ($salas as $sala)
@@ -91,19 +94,19 @@
                                             <input type="text" name="a_nombre_de" class="form-control" id="" required value="{{$reserva->a_nombre_de}}"><br>
 
                                             <label for="" class="form-label" style="color: black;"><strong>Dia de reserva:</strong></label>
-                                            <input type="date" name="dia" id="dia" class="form-control" required value="{{$reserva->dia}}"><br>
+                                            <input type="date" name="dia" id="diaM{{$i}}" class="form-control" required value="{{$reserva->dia}}"><br>
 
                                             <label for="" class="form-label" style="color: black;"><strong>Desde:</strong></label>
-                                            <input type="time" name="desde" class="form-control" id="inicio" required value="{{$reserva->desde}}"><br>
+                                            <input type="time" name="desde" class="form-control" id="inicioM{{$i}}" required value="{{$reserva->desde}}"><br>
 
                                             <label for="" class="form-label" style="color: black;"><strong>Hasta:</strong></label>
-                                            <input type="time" name="hasta" class="form-control" id="final" required value="{{$reserva->hasta}}"><br>
-                                            <div id="error"></div>
+                                            <input type="time" name="hasta" class="form-control" id="finalM{{$i}}" required value="{{$reserva->hasta}}"><br>
+                                            <div id="alertaM{{$i}}"></div>
 
                                             <label for="" class="form-label" style="color: black;"><strong>Observaciones</strong></label>
                                             <textarea name="observaciones" id="" class="form-control" cols="2" rows="3" required>{{$reserva->observaciones}}</textarea><br>
-                                            <div class="col d-flex justify-content-end">
-                                                <input type="submit" value="Reservar" class="btn btn-secondary d-flex justify-content-end">
+                                            <div class="col d-flex justify-content-start">
+                                                <input type="submit" value="Modificar" class="btn btn-primary">
                                             </div>
 
                                         </form>
@@ -125,11 +128,11 @@
                                     </div>
                                     <div class="modal-body">
 
-                                        Esta seguro de eliminar la reserva de la sala "{{$salaF->nombre}}" a nombre de "{{$reserva->a_nombre_de}}"?
+                                        Esta seguro de cancelar la reserva de la sala "{{$salaF->nombre}}" a nombre de "{{$reserva->a_nombre_de}}"?
 
                                     </div>
                                     <div class="modal-footer">
-                                        <form action="" method="POST">
+                                        <form action="{{route('eliminarRerserva',['reserva' => $reserva->id])}}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <input type="submit" class="btn btn-danger" value="Eliminar"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -152,13 +155,15 @@
                 @if (session('success'))
                 <h6 class="alert alert-success">{{session('success')}}</h6>
                 @endif
-                <div id="modal"></div>
-                <form action="{{route('agregarReserva')}}" method="POST" onsubmit="javascript: return validar(document.getElementById('dia').value, document.getElementById('inicio').value, document.getElementById('final').value);">
+                <!-- <div id="alert"></div> -->
+                <form action="{{route('agregarReserva')}}" method="POST" onsubmit="javascript: return validar(document.getElementById('dia').value, document.getElementById('inicio').value, document.getElementById('final').value, 'alerta');">
                     @csrf
                     <label for="" class="form-label" style="color: black;"><strong>Seleccionar sala</strong></label>
                     <select class="form-select" name="sala">
                         @foreach ($salas as $sala)
+                        @if ($sala->estado == "activa")
                         <option value="{{$sala->id}}">{{$sala->nombre}}</option>
+                        @endif
                         @endforeach
                     </select><br>
 
@@ -173,7 +178,7 @@
 
                     <label for="" class="form-label" style="color: black;"><strong>Hasta:</strong></label>
                     <input type="time" name="hasta" class="form-control" id="final" required><br>
-                    <div id="error"></div>
+                    <div id="alerta"></div>
 
                     <label for="" class="form-label" style="color: black;"><strong>Observaciones</strong></label>
                     <textarea name="observaciones" id="" class="form-control" cols="2" rows="3" required></textarea><br>
@@ -191,10 +196,19 @@
 </center>
 
 <script>
-    function validar(dia, inicio, final) {
+    function validar(dia, inicio, final, alerta) {
+
         let fechaInicio = new Date(dia + " " + inicio);
         let fechaFinal = new Date(dia + " " + final);
-        var modal = document.getElementById('error');
+        var modal = document.getElementById(alerta);
+
+        //No supe obtener la zona horaria del usuario
+        // let fechaActual = new Date();
+
+        // if (+fechaInicio < +fechaActual) {
+        //     modal.innerHTML = '<h6 class="alert alert-danger">La fecha de inicio no debe ser menor a la fecha actual</h6>';
+        //     return false;
+        // }
 
         let horaF = fechaFinal.getHours();
         let horaI = fechaInicio.getHours();
@@ -208,28 +222,34 @@
 
         if ((horaFEnMinutos + minF) - (horaIEnMinutos + minI) <= 120 &&
             (horaFEnMinutos + minF) - (horaIEnMinutos + minI) > 0) {
-            alert('No pasa de dos horas' + ((horaFEnMinutos + minF) - (horaIEnMinutos + minI)));
-            // modal.innerHTML = '<h6 class="alert alert-danger">Error al poner las horas de inicio y final</h6>';
             return true;
         }
 
         if ((horaFEnMinutos + minF) - (horaIEnMinutos + minI) == 0) {
-            alert('n' + ((horaFEnMinutos + minF) - (horaIEnMinutos + minI)));
             modal.innerHTML = '<h6 class="alert alert-danger">La hora  de inicio y final es la misma</h6>';
             return false;
         }
 
         if ((horaFEnMinutos + minF) - (horaIEnMinutos + minI) < 0) {
-            alert('n' + ((horaFEnMinutos + minF) - (horaIEnMinutos + minI)));
             modal.innerHTML = '<h6 class="alert alert-danger">La hora  de final debe ser mayor a la de inicio</h6>';
             return false;
         }
 
-        alert('Pasa de dos horas' + ((horaFEnMinutos + minF) - (horaIEnMinutos + minI)));
         modal.innerHTML = '<h6 class="alert alert-danger">La reserva no debe ser mayor a dos horas</h6>';
         return false;
     }
 </script>
+
+<!-- <script>
+    function validarFecha(fechaReservaString) {
+        fechaReserva = new Date(fechaReservaString);
+        fechaActual = new Date();
+        if (+fechaReserva > +fechaActual) {
+            return false;
+        }
+        return true;
+    }
+</script> -->
 
 <script>
     function resize() {
@@ -240,6 +260,7 @@
         //     col1.style.width = "600px";
         //     col2.style.width = "300px"
         // }
+
     }
 </script>
 @endsection

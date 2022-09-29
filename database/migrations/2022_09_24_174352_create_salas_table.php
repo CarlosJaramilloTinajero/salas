@@ -13,6 +13,7 @@ class CreateSalasTable extends Migration
      */
     public function up()
     {
+        //Creacion de tabla salas
         Schema::create('salas', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
