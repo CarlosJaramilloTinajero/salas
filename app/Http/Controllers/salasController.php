@@ -8,6 +8,76 @@ use Illuminate\Http\Request;
 
 class salasController extends Controller
 {
+
+    public function updateSala(Request $request, $id)
+    {
+
+        $request->validate([
+            'nombre' => 'required|min:5',
+            'ubicacion' => 'required|min:5',
+            'descripcion' => 'required|min:5',
+
+        ]);
+        $sala = sala::find($id);
+        $sala->nombre = $request->nombre;
+        $sala->ubicacion = $request->ubicacion;
+        $sala->descripcion = $request->descripcion;
+        $sala->estado = $request->estado;
+        $sala->save();
+
+        // return '{"msg":"Agregado"}';
+
+        return '{"msg":"Modificado"}';
+    }
+    public function eliminarSala($id)
+    {
+        $sala = sala::find($id);
+        $sala->delete();
+        return '{"msg":"Eliminado"}';
+    }
+
+    public function addSala(Request $request)
+    {
+        $sala = new sala();
+
+        // $nombre = $request->input('nombre');
+        // $ubicacion = $request->input('ubicacion');
+        // $descripcion = $request->input('descripcion');
+        // $estado = $request->input('estado');
+
+        // $sala->nombre = $nombre;
+        // $sala->ubicacion = $ubicacion;
+        // $sala->descripcion = $descripcion;
+        // $sala->estado = $estado;
+
+        // $sala->save();
+
+        $request->validate([
+            'nombre' => 'required|min:5',
+            'ubicacion' => 'required|min:5',
+            'descripcion' => 'required|min:5',
+
+        ]);
+
+        $sala = new sala();
+        $sala->nombre = $request->nombre;
+        $sala->ubicacion = $request->ubicacion;
+        $sala->descripcion = $request->descripcion;
+        $sala->estado = $request->estado;
+        $sala->save();
+
+        // return '{"msg":"Agregado"}';
+
+        return '{"msg":"Agregado"}';
+    }
+
+    public function getSalas()
+    {
+        $salas = sala::get();
+        return $salas;
+    }
+
+
     /**
      * Display a listing of the resource.
      *

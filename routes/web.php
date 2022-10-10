@@ -15,6 +15,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::post('/postItems', [itemsController::class, 'store']);
+
+Route::put('/updateSala/{sala}', [salasController::class, 'updateSala']);
+
+Route::delete('/deleteSala/{sala}', [salasController::class, 'eliminarSala']);
+
+Route::post('/addSala', [salasController::class, 'addSala']);
+
+Route::get('/getReservas', [reservaController::class, 'getReservas']);
+
+Route::get('/getSalas', [salasController::class, 'getSalas']);
+
+Route::get('/HttpReservas', [reservaController::class, 'HttpReservas']);
+
 Route::get('/reservas', [reservaController::class, 'index'])->name('reservas');
 
 Route::get('/', [salasController::class, 'index'])->name('inicio');

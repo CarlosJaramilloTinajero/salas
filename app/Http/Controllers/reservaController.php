@@ -8,6 +8,51 @@ use Illuminate\Http\Request;
 
 class reservaController extends Controller
 {
+    public function updateReserva(Request $request, $id)
+    {
+        $reserva =  reserva::find($id);
+        $reserva->a_nombre_de = $request->a_nombre_de;
+        $reserva->dia = $request->dia;
+        $reserva->desde = $request->desde;
+        $reserva->hasta = $request->hasta;
+        $reserva->observaciones = $request->observaciones;
+        $reserva->sala_id = $request->sala_id;
+
+        $reserva->save();
+        return '{"msg":"Agregado"}';
+    }
+
+    public function deleteReserva($id)
+    {
+        $reserva = reserva::find($id);
+        $reserva->delete();
+        return '{"msg":"Eliminado"}';
+    }
+
+    public function addReserva(Request $request)
+    {
+        $reserva = new reserva();
+        $reserva->a_nombre_de = $request->a_nombre_de;
+        $reserva->dia = $request->dia;
+        $reserva->desde = $request->desde;
+        $reserva->hasta = $request->hasta;
+        $reserva->observaciones = $request->observaciones;
+        $reserva->sala_id = $request->sala_id;
+
+        $reserva->save();
+        return '{"msg":"Agregado"}';
+    }
+    public function getReservas()
+    {
+        $reservas = reserva::get();
+        return $reservas;
+    }
+    public function HttpReservas()
+    {
+        $reservas = reserva::all();
+        return $reservas;
+    }
+
     public function index()
     {
         $reservas = reserva::all();
