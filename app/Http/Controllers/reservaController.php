@@ -19,7 +19,8 @@ class reservaController extends Controller
         $reserva->sala_id = $request->sala_id;
 
         $reserva->save();
-        return '{"msg":"Agregado"}';
+
+        return '{"msg":"Modificado"}';
     }
 
     public function deleteReserva($id)
