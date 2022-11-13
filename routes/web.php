@@ -24,6 +24,12 @@ Route::delete('/deleteSala/{sala}', [salasController::class, 'eliminarSala']);
 
 Route::post('/addSala', [salasController::class, 'addSala']);
 
+Route::get('/getSalas', [salasController::class, 'getSalas']);
+
+
+
+
+
 Route::get('/getReservas', [reservaController::class, 'getReservas']);
 
 Route::delete('/deleteReserva/{reserva}', [reservaController::class, 'deleteReserva']);
@@ -32,9 +38,16 @@ Route::put('/updateReserva/{reserva}', [reservaController::class, 'updateReserva
 
 Route::post('/addReserva', [reservaController::class, 'addReserva']);
 
-Route::get('/getSalas', [salasController::class, 'getSalas']);
+
 
 Route::get('/HttpReservas', [reservaController::class, 'HttpReservas']);
+
+
+
+
+
+
+
 
 Route::get('/reservas', [reservaController::class, 'index'])->name('reservas');
 

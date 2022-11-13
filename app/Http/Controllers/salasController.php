@@ -18,7 +18,15 @@ class salasController extends Controller
             'descripcion' => 'required|min:5',
 
         ]);
+
         $sala = sala::find($id);
+
+        if ($request->estado == "inactiva") {
+            $sala->reservas()->each(function ($reserva) {
+                $reserva->delete();
+            });
+        }
+
         $sala->nombre = $request->nombre;
         $sala->ubicacion = $request->ubicacion;
         $sala->descripcion = $request->descripcion;
@@ -29,9 +37,13 @@ class salasController extends Controller
 
         return '{"msg":"Modificado"}';
     }
+
     public function eliminarSala($id)
     {
         $sala = sala::find($id);
+        $sala->reservas()->each(function ($reserva) {
+            $reserva->delete();
+        });
         $sala->delete();
         return '{"msg":"Eliminado"}';
     }
